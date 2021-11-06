@@ -80,6 +80,7 @@ class SoundViewController: UIViewController {
             try reproducirAudio = AVAudioPlayer(contentsOf: audioURL!)
             reproducirAudio!.play()
             print("Reproduciendo")
+            print(reproducirAudio!.currentTime)
         } catch {}
     }
     @IBAction func agregarTapped(_ sender: Any) {

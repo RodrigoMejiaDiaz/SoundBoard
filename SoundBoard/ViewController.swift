@@ -17,6 +17,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var grabaciones:[Grabacion] = []
     var reproducirAudio:AVAudioPlayer?
+    var tiempo:Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = UITableViewCell()
         let grabacion = grabaciones[indexPath.row]
         cell.textLabel?.text = grabacion.nombre
+        cell.detailTextLabel?.text = String(tiempo)
         return cell
     }
     
@@ -48,6 +50,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         do{
             reproducirAudio = try AVAudioPlayer(data: grabacion.audio! as Data)
             reproducirAudio?.play()
+            while reproducirAudio!.isPlaying {
+                tiempo = Int(reproducirAudio!.currentTime)
+                let seconds = String(format: "%02d", Int(tiempo % 60))
+                print(seconds)
+                //cell.detailTextLabel?.text = String(Int(reproducirAudio!.currentTime))
+            }
         }catch{}
         tablaGrabaciones.deselectRow(at: indexPath, animated: true)
     }
